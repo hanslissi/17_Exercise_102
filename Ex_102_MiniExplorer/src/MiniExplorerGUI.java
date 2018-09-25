@@ -10,11 +10,11 @@
  */
 public class MiniExplorerGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MiniExplorerGUI
-     */
+    private FileModel bl = new FileModel();
+    
     public MiniExplorerGUI() {
         initComponents();
+        liAll.setModel(bl);
     }
 
     /**
@@ -36,6 +36,11 @@ public class MiniExplorerGUI extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        liAll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                onChangeDir(evt);
+            }
+        });
         jScrollPane1.setViewportView(liAll);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -51,6 +56,10 @@ public class MiniExplorerGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void onChangeDir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onChangeDir
+        // TODO add your handling code here:
+    }//GEN-LAST:event_onChangeDir
 
     /**
      * @param args the command line arguments
