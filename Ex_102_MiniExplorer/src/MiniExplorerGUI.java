@@ -1,3 +1,6 @@
+
+import java.io.File;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +18,7 @@ public class MiniExplorerGUI extends javax.swing.JFrame {
     public MiniExplorerGUI() {
         initComponents();
         liAll.setModel(bl);
+        liAll.setCellRenderer(new FileListRenderer());
     }
 
     /**
@@ -30,12 +34,13 @@ public class MiniExplorerGUI extends javax.swing.JFrame {
         liAll = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        liAll.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
         });
+
+        liAll.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
         liAll.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 onChangeDir(evt);
@@ -60,6 +65,13 @@ public class MiniExplorerGUI extends javax.swing.JFrame {
     private void onChangeDir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onChangeDir
         // TODO add your handling code here:
     }//GEN-LAST:event_onChangeDir
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        File currDir = new File(".");
+        for (File file : currDir.listFiles()) {
+            bl.add(file.getAbsolutePath());
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
