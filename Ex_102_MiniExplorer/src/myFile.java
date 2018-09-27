@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class myFile extends File{
     private Color color;
+    private Color backColor;
     
     public myFile(String pathname) {
         super(pathname);
@@ -30,6 +31,16 @@ public class myFile extends File{
             color = Color.BLUE;
         }
         return color;
+    }
+
+    public Color getBackColor() {
+        if(this.isDirectory()){
+            backColor = Color.LIGHT_GRAY;
+        }
+        else{
+            backColor = new Color(220,220,220);
+        }
+        return backColor;
     }
     
     

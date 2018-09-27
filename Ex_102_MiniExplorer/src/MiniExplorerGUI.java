@@ -63,12 +63,23 @@ public class MiniExplorerGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void onChangeDir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onChangeDir
-        // TODO add your handling code here:
+        if(evt.getClickCount()==2){
+            String path = bl.getElementAt(liAll.getSelectedIndex()).getAbsolutePath() + "/.";
+            File currDirUpdate = new File(path);
+            bl.deleteAll();
+            bl.add(currDirUpdate.getAbsolutePath()+"/..");
+            for (File file : currDirUpdate.listFiles()) {
+            bl.add(file.getAbsolutePath());
+        }
+        }
     }//GEN-LAST:event_onChangeDir
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         File currDir = new File(".");
+        System.out.println(currDir.getAbsoluteFile());
+        bl.add(currDir.getAbsolutePath()+"/..");
         for (File file : currDir.listFiles()) {
+            
             bl.add(file.getAbsolutePath());
         }
     }//GEN-LAST:event_formWindowOpened
@@ -110,6 +121,6 @@ public class MiniExplorerGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> liAll;
+    private javax.swing.JList<myFile> liAll;
     // End of variables declaration//GEN-END:variables
 }

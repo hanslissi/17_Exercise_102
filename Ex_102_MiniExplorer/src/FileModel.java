@@ -1,6 +1,8 @@
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import javax.swing.AbstractListModel;
 
 /*
@@ -13,7 +15,7 @@ import javax.swing.AbstractListModel;
  *
  * @author johannesriedmueller
  */
-public class FileModel extends AbstractListModel{
+public class FileModel extends AbstractListModel<myFile>{
     private ArrayList<myFile> allFiles = new ArrayList<>();
     private ArrayList<myFile> filteredFiles = new ArrayList<>();
     
@@ -21,7 +23,17 @@ public class FileModel extends AbstractListModel{
         myFile toAdd = new myFile(absolutePath);
         allFiles.add(toAdd);
         filteredFiles.add(toAdd);
+        sort();
         fireIntervalAdded(filteredFiles, filteredFiles.size()-1, filteredFiles.size()-1);
+        
+    }
+    
+    public void deleteAll(){
+        filteredFiles.clear();
+    }
+    
+    public void sort(){
+        Collections.sort(filteredFiles, new FileComparer());
     }
     
     @Override
@@ -30,7 +42,7 @@ public class FileModel extends AbstractListModel{
     }
 
     @Override
-    public Object getElementAt(int index) {
+    public myFile getElementAt(int index) {
         return filteredFiles.get(index);
     }
     

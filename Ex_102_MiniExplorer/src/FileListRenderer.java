@@ -31,8 +31,9 @@ public class FileListRenderer implements ListCellRenderer{
             else{
                 label.setFont(new Font("Courier New", Font.PLAIN, 12));
             }
+            label.setBackground(isSelected ? Color.GRAY : file.getBackColor());
         }
-        label.setBackground(isSelected ? Color.lightGray : Color.white);
+        
         
         return label;
     }
