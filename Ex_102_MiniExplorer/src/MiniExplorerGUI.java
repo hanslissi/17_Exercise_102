@@ -1,12 +1,13 @@
 
+import java.awt.Desktop;
 import java.io.File;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author johannesriedmueller
@@ -14,7 +15,7 @@ import java.io.File;
 public class MiniExplorerGUI extends javax.swing.JFrame {
 
     private FileModel bl = new FileModel();
-    
+
     public MiniExplorerGUI() {
         initComponents();
         liAll.setModel(bl);
@@ -52,34 +53,51 @@ public class MiniExplorerGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void onChangeDir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onChangeDir
-        if(evt.getClickCount()==2){
-            String path = bl.getElementAt(liAll.getSelectedIndex()).getAbsolutePath() + "/.";
+        if (evt.getClickCount() == 2) {
+            String path = bl.getElementAt(liAll.getSelectedIndex()).getAbsolutePath();
             File currDirUpdate = new File(path);
-            bl.deleteAll();
-            bl.add(currDirUpdate.getAbsolutePath()+"/..");
-            for (File file : currDirUpdate.listFiles()) {
-            bl.add(file.getAbsolutePath());
+            if (currDirUpdate.isFile()) {
+                try{
+                if(!Desktop.isDesktopSupported()){
+                    
+                }
+                else{
+                    Desktop desktop = Desktop.getDesktop();
+                    if(currDirUpdate.exists()){
+                        desktop.open(currDirUpdate);
+                    }
+                }
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null,"File cannot be opened!");
+                }
+            } else {
+                bl.deleteAll();
+                bl.add(currDirUpdate.getAbsolutePath() + "/..");
+                for (File file : currDirUpdate.listFiles()) {
+                    bl.add(file.getAbsolutePath());
+                }
+            }
         }
-        }
+
     }//GEN-LAST:event_onChangeDir
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         File currDir = new File(".");
-        System.out.println(currDir.getAbsoluteFile());
-        bl.add(currDir.getAbsolutePath()+"/..");
+        bl.add(currDir.getAbsolutePath() + "/..");
         for (File file : currDir.listFiles()) {
-            
             bl.add(file.getAbsolutePath());
         }
     }//GEN-LAST:event_formWindowOpened

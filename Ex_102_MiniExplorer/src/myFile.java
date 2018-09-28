@@ -63,7 +63,10 @@ public class myFile extends File{
             if(this.canExecute()){
                 sb.append("X");
             }
-            return String.format("%s %20s %8d KB %s", this.getName(), dtf.format(ldt), this.length()/1000, sb);
+            if(this.isHidden()){
+                sb.append("H");
+            }
+            return String.format("%-30s %25s %10d KB %s", this.getName(), dtf.format(ldt), this.length()/1000, sb);
         }
     }
     
